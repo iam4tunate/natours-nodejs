@@ -1,0 +1,21 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning node, express & mongoBD",
+  "license": "ISC",
+  "author": "Fortunate Ogodu",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.19.0"
+  }
+}
