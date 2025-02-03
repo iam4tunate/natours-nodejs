@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -25,10 +24,16 @@ const tourSchema = new mongoose.Schema(
     difficulty: {
       type: String,
       required: [true, 'A tour must have a difficulty'],
+      enum: {
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult',
+      },
     },
     ratingsAverage: {
       type: Number,
-      default: 0,
+      default: 4.5,
+      min: [1, 'Ratings must be below 1.0'],
+      max: [5, 'Ratings must be below 5.0'],
     },
     ratingsQuantity: {
       type: Number,
@@ -38,16 +43,17 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'A tour must have a price'],
     },
-    priceDiscount: {
-      type: Number,
-      validate: {
-        validator: function (val) {
-          // this only points to current doc on NEW document creation does not on UPDATE. this check can be done on the frontend.
-          return val < this.price; // checkin if the discount price is less than the original price
-        },
-        message: 'Discount price ({VALUE}) should be below the regular price',
-      },
-    },
+    priceDiscount: Number,
+    // priceDiscount: {
+    //   type: Number,
+    //   validate: {
+    //     validator: function (val) {
+    //   this only points to current doc on NEW document creation does not on UPDATE. this check can be done on the frontend.
+    //       return val < this.price; // checkin if the discount price is less than the original price
+    //     },
+    //     message: 'Discount price ({VALUE}) should be below the regular price',
+    //   },
+    // },
     summary: {
       type: String,
       trim: true, //"  hello  " remove all whtespaces begfore and after
